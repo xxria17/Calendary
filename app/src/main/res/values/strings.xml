@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Calendary</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_number">1</string>
+
+    <string name="Mon">월</string>
+    <string name="Tue">화</string>
+    <string name="Wed">수</string>
+    <string name="Thur">목</string>
+    <string name="Fri">금</string>
+    <string name="Sat">토</string>
+    <string name="Sun">일</string>
+
+    <string name="Home">달력</string>
 </resources>

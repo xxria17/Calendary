@@ -13,4 +13,6 @@
     <string name="Sun">일</string>
 
     <string name="Home">달력</string>
+
+    <string name="login">LOGIN</string>
 </resources>

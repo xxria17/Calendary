@@ -1,14 +1,16 @@
 package com.example.calendary.calendar;
 
 
-import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +19,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.calendary.ItemDecoration;
 import com.example.calendary.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 
 
-public class CalendarFragment extends Fragment implements View.OnClickListener {
+public class CalendarFragment extends Fragment {
 
     TextView current_Month;
     ImageView prevMonth;
@@ -35,18 +37,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private CalendarAdapter adapter;
 
-    private static final String dateTemplate = "yyyy MMMM";
-
-    private ArrayList<CalendarModel> calList = new ArrayList<>();
-    private static final int DAY_OFFSET = 1;
-    private final String[] weekdays = new String[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-    private int lastDays;
     private Calendar cal;
-    public int cur_month ,cur_year;
+
     RecyclerView.LayoutManager layoutManager;
 
     public CalendarFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -65,9 +60,27 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         layoutManager = new GridLayoutManager(getContext(), BaseCalendar.DAYS_OF_WEEK);
         calendar.setLayoutManager(layoutManager);
         calendar.setAdapter(adapter);
+        calendar.addItemDecoration(new ItemDecoration(view.getContext()));
 
         cal = Calendar.getInstance();
-//        adapter.refreshView(cal);
+        adapter.refreshView(cal);
+
+
+        prevMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.changeToPrevMonth();
+//                adapter.refreshView(cal);
+            }
+        });
+
+        nextMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.changeToNextMonth();
+//                adapter.refreshView(cal);
+            }
+        });
     }
 
     @Override
@@ -92,6 +105,25 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         Log.d(CalendarFragment.class.getSimpleName(), String.format("check to %s", arg));
     }
 
+    private void showToast(final String arg) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String showTxt = nullToEmptyString(arg);
+                Toast.makeText(getContext(), showTxt, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String nullToEmptyString(String arg) {
+        if(arg == null) {
+            return "";
+        }
+
+        return arg;
+    }
+
     private void init(View view){
         current_Month = view.findViewById(R.id.currentMonth);
         prevMonth = view.findViewById(R.id.prevMonth);
@@ -100,18 +132,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     }
 
     public void refreshCurrentMonth(Calendar calendar){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy MM", Locale.KOREAN);
-        current_Month.setText(format.format(cal.getTime()));
+        SimpleDateFormat format = new SimpleDateFormat("MM월", Locale.KOREAN);
+        current_Month.setText(format.format(calendar.getTime()));
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == prevMonth){
-            adapter.changeToPrevMonth();
-        } else if(v == nextMonth) {
-            adapter.changeToNextMonth();
-        } else{
-            return;
-        }
-    }
 }

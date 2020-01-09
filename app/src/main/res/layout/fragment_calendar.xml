@@ -36,11 +36,11 @@
             <TextView
                 android:id="@+id/currentMonth"
                 android:layout_width="match_parent"
-                android:layout_height="60sp"
+                android:layout_height="40sp"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/notosans_regular"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:fontFamily="@font/notosans_regular"/>
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:layout_width="50dp"
@@ -60,8 +60,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="26dp"
             android:gravity="center"
+            android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -125,7 +126,6 @@
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="7" />
 

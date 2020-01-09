@@ -13,11 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendary.R;
 
 import java.util.Calendar;
-import java.util.List;
+
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
-    private List<CalendarModel> calendarModelList;
     BaseCalendar baseCalendar;
     CalendarFragment calendarFragment;
 
@@ -31,11 +30,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         baseCalendar.init();
         baseCalendar.initBaseCalendar();
 
-    }
-
-    public void refreshView(Calendar calendar) {
-        calendarFragment.refreshCurrentMonth(calendar);
-        notifyDataSetChanged();
     }
 
     //2. 그릴 뷰 인스턴스 요청
@@ -58,7 +52,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             holder.day.setTextColor(Color.parseColor("#676d6e"));
         }
 
-        if(position < baseCalendar.prevMonthTailOffset || position >= baseCalendar.prevMonthTailOffset+baseCalendar.currentMonthMaxDate){
+        if(position < baseCalendar.prevMonthTailOffset -1 || position > baseCalendar.prevMonthTailOffset+baseCalendar.currentMonthMaxDate){
             holder.day.setAlpha(0.3f);
         } else {
             holder.day.setAlpha(1f);
@@ -81,19 +75,21 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         public ViewHolder(View v){
             super(v);
             day = v.findViewById(R.id.calendar_date);
-
         }
     }
 
     public void changeToPrevMonth(){
         baseCalendar.changeToPrevMonth();
+        refreshView(baseCalendar.calendar);
     }
 
     public void changeToNextMonth(){
         baseCalendar.changeToNextMonth();
+        refreshView(baseCalendar.calendar);
     }
 
-    public interface OnCalendarAdapterListener {
-        public void onChangeCalendar(Calendar calendar);
+    public void refreshView(Calendar calendar) {
+        notifyDataSetChanged();
+        calendarFragment.refreshCurrentMonth(calendar);
     }
 }

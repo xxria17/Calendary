@@ -12,18 +12,17 @@ import android.view.ViewGroup;
 import com.example.calendary.R;
 
 
+public class DiaryFragment extends Fragment {
 
-public class MyPageFragment extends Fragment {
 
-
-    public MyPageFragment() {
+    public DiaryFragment() {
         // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_diary, container, false);
 
         return view;
     }

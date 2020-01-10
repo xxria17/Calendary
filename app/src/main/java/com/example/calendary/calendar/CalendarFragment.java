@@ -9,18 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendary.ItemDecoration;
+import com.example.calendary.OnSwipeTouchListener;
 import com.example.calendary.R;
+import com.example.calendary.RecyclerClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +35,8 @@ public class CalendarFragment extends Fragment {
     TextView current_Month;
     ImageView prevMonth;
     ImageView nextMonth;
-    RecyclerView calendar;
+    RecyclerView calendarView;
+    LinearLayout calendarLayout;
 
     private CalendarAdapter adapter;
 
@@ -58,19 +61,19 @@ public class CalendarFragment extends Fragment {
 
         adapter = new CalendarAdapter(this);
         layoutManager = new GridLayoutManager(getContext(), BaseCalendar.DAYS_OF_WEEK);
-        calendar.setLayoutManager(layoutManager);
-        calendar.setAdapter(adapter);
-        calendar.addItemDecoration(new ItemDecoration(view.getContext()));
+        calendarView.setLayoutManager(layoutManager);
+        calendarView.setAdapter(adapter);
+        calendarView.addItemDecoration(new ItemDecoration(view.getContext()));
 
         cal = Calendar.getInstance();
         adapter.refreshView(cal);
+
 
 
         prevMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter.changeToPrevMonth();
-//                adapter.refreshView(cal);
             }
         });
 
@@ -78,9 +81,27 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 adapter.changeToNextMonth();
-//                adapter.refreshView(cal);
             }
         });
+
+        calendarLayout.setOnTouchListener(new OnSwipeTouchListener(view.getContext()){
+            public void onSwipeRight() {
+                adapter.changeToPrevMonth();
+            }
+
+            public void onSwipeLeft() {
+                adapter.changeToNextMonth();
+            }
+
+            public void onSwipeTop() {
+            }
+
+            public void onSwipeBottom() {
+            }
+        });
+
+        select_date();
+
     }
 
     @Override
@@ -128,12 +149,27 @@ public class CalendarFragment extends Fragment {
         current_Month = view.findViewById(R.id.currentMonth);
         prevMonth = view.findViewById(R.id.prevMonth);
         nextMonth = view.findViewById(R.id.nextMonth);
-        calendar = view.findViewById(R.id.calendar);
+        calendarView = view.findViewById(R.id.calendar);
+        calendarLayout = view.findViewById(R.id.calendar_layout);
     }
 
     public void refreshCurrentMonth(Calendar calendar){
-        SimpleDateFormat format = new SimpleDateFormat("MM월", Locale.KOREAN);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월", Locale.KOREAN);
         current_Month.setText(format.format(calendar.getTime()));
+    }
+
+    private void select_date(){
+        calendarView.addOnItemTouchListener(new RecyclerClickListener.RecyclerTouchListener(getActivity().getApplicationContext(), calendarView, new RecyclerClickListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(view.getContext(), position +"Clicked!",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
     }
 
 }

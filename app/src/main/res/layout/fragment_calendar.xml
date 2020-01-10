@@ -9,6 +9,7 @@
     android:id="@+id/calendar_framelayout">
 
     <LinearLayout
+        android:id="@+id/calendar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -61,8 +62,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="26dp"
-            android:gravity="center"
             android:layout_marginTop="2dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -126,6 +127,7 @@
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="7" />
 

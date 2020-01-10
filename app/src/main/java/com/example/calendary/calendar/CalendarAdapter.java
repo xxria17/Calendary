@@ -52,7 +52,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             holder.day.setTextColor(Color.parseColor("#676d6e"));
         }
 
-        if(position < baseCalendar.prevMonthTailOffset -1 || position > baseCalendar.prevMonthTailOffset+baseCalendar.currentMonthMaxDate){
+        if(position < baseCalendar.prevMonthTailOffset -2 || position >= baseCalendar.prevMonthTailOffset+baseCalendar.currentMonthMaxDate - 2){
             holder.day.setAlpha(0.3f);
         } else {
             holder.day.setAlpha(1f);

@@ -51,7 +51,7 @@ public class BaseCalendar {
     }
 
     public void changeToNextMonth(){
-//        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
+//        calendarView.set(Calendar.MONTH, calendarView.get(Calendar.MONTH) + 1);
         calendar.add(Calendar.MONTH, 1);
 
         try {
@@ -62,25 +62,20 @@ public class BaseCalendar {
     }
 
     private void makeMonthDate() throws ParseException {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String calDate = sdf.format(calendar.getTime());
-            Log.d("ddd", String.format("check to calDate : %s", calDate));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         data.clear();
-//        calendar.set(Calendar.DATE, 2);
+
         currentMonthMaxDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         prevMonthTailOffset = calendar.get(Calendar.DAY_OF_WEEK ) - 1;
 
-        makePrevMonthTail(calendar);
-        makeCurrentMonth(calendar);
+//        makePrevMonthTail(calendar);
+        getFirstDate(calendar);
+//        makeCurrentMonth(calendar);
+        getCurrentMonth(calendar);
 
         nextMonthHeadOffset = LOW_OF_CALENDAR * DAYS_OF_WEEK - (prevMonthTailOffset + currentMonthMaxDate);
-        makeNextMonthHead();
+//        makeNextMonthHead();
+        getNextMonthHead(calendar);
 
     }
 
@@ -89,20 +84,88 @@ public class BaseCalendar {
     * */
     private void makePrevMonthTail(Calendar calendar){
         // TODO: 2020-01-09 객체 참조
-//        calendar.set(Calendar.MONTH , calendar.get(Calendar.MONTH) - 1);
+//        calendarView.set(Calendar.MONTH , calendarView.get(Calendar.MONTH) - 1);
         Date targetDate = calendar.getTime();
         Calendar prevCal = Calendar.getInstance();
         prevCal.setTime(targetDate);
 
+        int maxDate = prevCal.getActualMaximum(Calendar.DATE);
+        int maxoffsetDate = maxDate - prevMonthTailOffset + 1;
 
-        int maxDate = calendar.getActualMaximum(Calendar.DATE);
-        int maxoffsetDate = maxDate - prevMonthTailOffset;
-
-        Log.d("ZZZZZZZZZZZZZ",maxoffsetDate+"");
-        for(int i=1; i<prevMonthTailOffset; i++){
-            data.add(maxoffsetDate);
+        for(int i=2; i<prevMonthTailOffset; i++){
+            maxoffsetDate += 1;
+           data.add(maxoffsetDate);
+//            data.add(0, maxoffsetDate);
         }
     }
+
+    /*
+    * 해당하는 달 1일의 요일 구해서 전 달의 마지막 날짜 넣어주기
+    * */
+    private void getFirstDate(Calendar cal) throws ParseException{
+        Date date = cal.getTime();
+        Calendar currCal = Calendar.getInstance();
+        currCal.setTime(date);
+
+        String firstDate =String.valueOf(cal.get(Calendar.YEAR)) + "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + "01";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date first = dateFormat.parse(firstDate);
+        currCal.setTime(first);
+
+        int weekDate = currCal.get(Calendar.DAY_OF_WEEK); //1일의 요일
+        int prevMonthDays = currCal.getActualMaximum(Calendar.DAY_OF_MONTH); //전 달의 일수
+        int addCount = weekDate - 1; //채워줘야 할 요일의 갯수
+        int prevDays = prevMonthDays - addCount; //채워질 날짜
+
+
+        if(DAYS_OF_WEEK - weekDate != 0) {
+            for(int i = 1; i <= addCount; i++){
+                prevDays += 1;
+                data.add(prevDays);
+            }
+        } else{
+            return;
+        }
+    }
+
+    private void getCurrentMonth(Calendar cal){
+        Date date = cal.getTime();
+        Calendar currCal = Calendar.getInstance();
+        currCal.setTime(date);
+
+        int currMonthDays = currCal.getActualMaximum(Calendar.DAY_OF_MONTH); // 해당 달의 일수
+
+        for(int i = 1; i <= currMonthDays; i++){
+            data.add(i);
+        }
+    }
+
+    private void getNextMonthHead(Calendar cal) throws ParseException{
+        Date date = cal.getTime();
+        Calendar currCal = Calendar.getInstance();
+        currCal.setTime(date);
+
+        int lastDay = currCal.getMaximum(Calendar.DAY_OF_MONTH); // 해당 달의 마지막 날짜
+
+        String lastDate =String.valueOf(cal.get(Calendar.YEAR)) + "0" + String.valueOf(cal.get(Calendar.MONTH) + 1) + "" + lastDay;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date last = dateFormat.parse(lastDate);
+        currCal.setTime(last);
+
+        int weekDate = currCal.get(Calendar.DAY_OF_WEEK); //마지막 날짜의 요일
+        int monthDays = currCal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 달의 일수
+        int nextDays = DAYS_OF_WEEK - weekDate; //채워질 날짜
+
+        if(nextDays != 0) {
+            for(int i = 1; i <= nextDays; i++){
+                data.add(i);
+            }
+        } else{
+            return;
+        }
+    }
+
+
 
     /*
     * 달력에 표시되는 현재 달
@@ -112,6 +175,7 @@ public class BaseCalendar {
             int currentMaxDay = calendar.getActualMaximum(Calendar.DATE);
         for (int i=1; i<= currentMaxDay;i++){
             data.add(i);
+
         }
     }
 
@@ -119,10 +183,8 @@ public class BaseCalendar {
     * 달력에 표시되는 다음 달 첫 부분
     * */
     private void makeNextMonthHead(){
-        int date = 1;
         for(int i = 1; i<= nextMonthHeadOffset; i++){
-            data.add(date);
+            data.add(i);
         }
-        Log.d("ZZZZZZZZZZZZZ",date+"");
     }
 }

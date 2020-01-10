@@ -17,7 +17,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     private int size5;
 
     public ItemDecoration(Context context){
-        size10 = dpToPx(context, 40);
+        size10 = dpToPx(context, 35);
         size5 = dpToPx(context, 13);
     }
 

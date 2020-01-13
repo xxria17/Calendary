@@ -1,5 +1,6 @@
 package com.example.calendary.calendar;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     BaseCalendar baseCalendar;
     CalendarFragment calendarFragment;
+    HolidayCalendar holidayCalendar;
+
+    private OnCalendarAdapterListener mListener = null;
+
+    private int select_position = -1;
 
     public CalendarAdapter(CalendarFragment fragment) {
         init();
@@ -29,7 +35,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         baseCalendar = new BaseCalendar();
         baseCalendar.init();
         baseCalendar.initBaseCalendar();
+        holidayCalendar = new HolidayCalendar();
+    }
 
+    public void setOnCalendarAdapterListener(OnCalendarAdapterListener listener) {
+        this.mListener = listener;
     }
 
     //2. 그릴 뷰 인스턴스 요청
@@ -43,22 +53,42 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CalendarAdapter.ViewHolder holder, int position) {
-//        holder.day.setText(calendarModelList.get(position).getDay());
+    public void onBindViewHolder(@NonNull CalendarAdapter.ViewHolder holder, final int position) {
 
-        if (position % BaseCalendar.DAYS_OF_WEEK == 0) {
+        // 일요일 날짜 텍스트 컬러
+//        if ( {
+//            holder.day.setTextColor(Color.parseColor(""));
+//        } else {
+//
+//        }
+
+//        // 공휴일 텍스트 컬러
+//        ArrayList<Holidays> arrayList = HolidayCalendar.holidaysArrayList("2020");
+//        arrayList.get(position).getDate();
+//        holder.day.getResources().getColor(R.color.red);
+        final String dayString = baseCalendar.data.get(position).toString();
+
+        if(select_position == position){
+            holder.day.setBackgroundResource(R.color.colorPrimary);
+            holder.day.setTextColor(Color.parseColor("#FFFFFF"));
+        } else if(position % BaseCalendar.DAYS_OF_WEEK == 0) {
+            holder.day.setBackgroundResource(R.color.transparent);
             holder.day.setTextColor(Color.parseColor("#FF1200"));
         } else {
             holder.day.setTextColor(Color.parseColor("#676d6e"));
         }
 
-        if(position < baseCalendar.prevMonthTailOffset -2 || position >= baseCalendar.prevMonthTailOffset+baseCalendar.currentMonthMaxDate - 2){
-            holder.day.setAlpha(0.3f);
-        } else {
-            holder.day.setAlpha(1f);
-        }
+        holder.day.setAlpha(1f);
+        holder.day.setText(dayString);
 
-        holder.day.setText(baseCalendar.data.get(position).toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null) {
+                    mListener.onClickListener(v.getContext(), dayString, position);
+                }
+            }
+        });
     }
 
     //1. 몇개 그릴건지 확인하는 메소드
@@ -91,5 +121,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public void refreshView(Calendar calendar) {
         notifyDataSetChanged();
         calendarFragment.refreshCurrentMonth(calendar);
+    }
+
+    public interface OnCalendarAdapterListener {
+        public void onClickListener(Context ctx, String day, int position);
     }
 }

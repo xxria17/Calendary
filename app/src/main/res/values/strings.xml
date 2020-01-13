@@ -15,4 +15,9 @@
     <string name="Home">달력</string>
 
     <string name="login">LOGIN</string>
+    <string name="name">NAME</string>
+    <string name="email">EMAIL</string>
+    <string name="pw">PW</string>
+    <string name="join">JOIN</string>
+    <string name="pwcheck">비밀번호 확인</string>
 </resources>

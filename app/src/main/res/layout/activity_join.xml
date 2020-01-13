@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".JoinActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,16 +33,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
                 android:fontFamily="@font/notossans_bold"
+                android:text="@string/name"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_joinName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="45dp"
+                    android:background="@color/transparent"
+                    android:inputType="textPersonName" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="45dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:fontFamily="@font/notossans_bold"
                 android:text="@string/email"
                 android:textColor="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_loginEmail"
+                    android:id="@+id/edit_joinEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
@@ -54,12 +82,11 @@
                     android:inputType="textEmailAddress" />
 
                 <View
-                    android:id="@+id/email_view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="45dp"
-                    android:layout_marginBottom="22dp"
+                    android:layout_marginBottom="50dp"
                     android:background="@color/colorPrimary" />
             </LinearLayout>
 
@@ -73,11 +100,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_loginPw"
+                    android:id="@+id/edit_joinPw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
@@ -86,51 +113,56 @@
                     android:inputType="textPassword" />
 
                 <View
-                    android:id="@+id/pw_view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="45dp"
                     android:layout_marginBottom="50dp"
                     android:background="@color/colorPrimary" />
+            </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:fontFamily="@font/notossans_bold"
+                android:text="@string/pwcheck"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_joinPwcheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="45dp"
+                    android:background="@color/transparent"
+                    android:inputType="textPassword" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="45dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@color/colorPrimary" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/joinButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
                 android:background="@color/colorPrimary"
                 android:fontFamily="@font/notossans_bold"
-                android:text="@string/login"
+                android:text="@string/join"
                 android:textColor="@color/white" />
 
-
-            <TextView
-                android:id="@+id/signUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="45dp"
-                android:fontFamily="@font/notossans_bold"
-                android:gravity="right"
-                android:text="회원가입하기"
-                android:textColor="#F54F30"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/findPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="45dp"
-                android:fontFamily="@font/notossans_bold"
-                android:gravity="right"
-                android:text="비밀번호 찾기"
-                android:textColor="#777777"
-                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

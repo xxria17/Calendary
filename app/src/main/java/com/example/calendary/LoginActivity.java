@@ -14,9 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.calendary.Model.UserInfo;
-import com.example.calendary.login.BaseLogin;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -68,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (v == signin_btn){
             login();
+        }
+        else if(v == signup_tv){
+            startActivity(new Intent(getApplicationContext(), JoinActivity.class));
         }
     }
 

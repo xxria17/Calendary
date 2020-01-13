@@ -1,6 +1,7 @@
 package com.example.calendary.calendar;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendary.ItemDecoration;
 import com.example.calendary.OnSwipeTouchListener;
 import com.example.calendary.R;
-import com.example.calendary.RecyclerClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,7 +63,7 @@ public class CalendarFragment extends Fragment {
         layoutManager = new GridLayoutManager(getContext(), BaseCalendar.DAYS_OF_WEEK);
         calendarView.setLayoutManager(layoutManager);
         calendarView.setAdapter(adapter);
-        calendarView.addItemDecoration(new ItemDecoration(view.getContext()));
+//        calendarView.addItemDecoration(new ItemDecoration(view.getContext()));
 
         cal = Calendar.getInstance();
         adapter.refreshView(cal);
@@ -159,17 +159,25 @@ public class CalendarFragment extends Fragment {
     }
 
     private void select_date(){
-        calendarView.addOnItemTouchListener(new RecyclerClickListener.RecyclerTouchListener(getActivity().getApplicationContext(), calendarView, new RecyclerClickListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Toast.makeText(view.getContext(), position +"Clicked!",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
+        adapter.setOnCalendarAdapterListener(mCalendarAdapterListener);
+//        calendarView.addOnItemTouchListener(new RecyclerClickListener.RecyclerTouchListener(getActivity().getApplicationContext(), calendarView, new RecyclerClickListener.ClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                Toast.makeText(view.getContext(), position +"Clicked!",Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//
+//            }
+//        }));
     }
+
+    private CalendarAdapter.OnCalendarAdapterListener mCalendarAdapterListener = new CalendarAdapter.OnCalendarAdapterListener() {
+        @Override
+        public void onClickListener(Context ctx, String day, int position) {
+            Toast.makeText(ctx, position +"Clicked!",Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }

@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.DiaryFragment">
+    tools:context=".diary.DiaryFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:id="@+id/swipeLayout">
+        android:id="@+id/swipeLayout1">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shareDiary_list"

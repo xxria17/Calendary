@@ -32,9 +32,9 @@ import static android.content.ContentValues.TAG;
 
 public class BaseDiary {
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseUser user = firebaseAuth.getCurrentUser();
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseUser user;
 
     private DiaryAdapter diaryAdapter;
 
@@ -44,7 +44,12 @@ public class BaseDiary {
     /*
     *  인기순
     * */
-    public void load_Bestdiary(final RecyclerView recyclerView){
+    public void load_Bestdiary(final RecyclerView recyclerView, DiaryAdapter adapter){
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        this.diaryAdapter = adapter;
+
         CollectionReference reference = firebaseFirestore.collection("Content");
         reference.whereEqualTo("show", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -113,10 +118,44 @@ public class BaseDiary {
         });
     }
 
-//    public void select_diary(Context context , int position){
-//        Intent intent = new Intent(context, DetailActivity.class);
-//        intent.putExtra("id", diaryModelList.get(position).id);
-//        intent.putExtra("Content", diaryModelList.get(position));
-//        startActivity(intent);
+
+    public interface OnResultCallback {
+        public void onLoadComplete(List<DiaryModel> dList);
+        public void onLoadFail();
+    }
+//
+//    public void load_Bestdiary(final OnResultCallback callback){
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseFirestore = FirebaseFirestore.getInstance();
+//        user = firebaseAuth.getCurrentUser();
+//        this.diaryAdapter = adapter;
+//
+//        CollectionReference reference = firebaseFirestore.collection("Content");
+//        reference.whereEqualTo("show", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    QuerySnapshot documentSnapshots = task.getResult();
+//                    diaryModelList = new ArrayList<>();
+//                    diaryMap = new HashMap<>();
+//                    for(QueryDocumentSnapshot document : documentSnapshots) {
+//                        DiaryModel diaryModel = new DiaryModel();
+//
+//                        diaryModel.id = (String) document.getId();
+//                        diaryModel.title = (String) diaryMap.getOrDefault("title", "제목");
+//                        diaryModel.content = (String) diaryMap.getOrDefault("content", "내용");
+//                        diaryModel.username = (String) diaryMap.getOrDefault("user name", "이름");
+////                    diaryModel.imageView = (ImageView) diaryMap.getOrDefault("title", "제목");
+//
+//                        diaryModelList.add(diaryModel);
+//                    }
+//
+//                    callback.onLoadComplete(diaryModelList);
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                    callback.onLoadFail();
+//                }
+//            }
+//        });
 //    }
 }

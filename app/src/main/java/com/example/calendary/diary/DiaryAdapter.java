@@ -22,7 +22,17 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
     private List<DiaryModel> diaryModelList;
     private OnDiaryAdapterListener mListener = null;
 
-
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView titleTextView, contentTextView, timeTextView, nameTextView;
+        public ImageView profileView;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            timeTextView = itemView.findViewById(R.id.diarylist_timestamp);
+            contentTextView = itemView.findViewById(R.id.diarylist_content);
+            titleTextView = itemView.findViewById(R.id.diarylist_title);
+            nameTextView = itemView.findViewById(R.id.diarylist_username);
+        }
+    }
 
     @NonNull
     @Override
@@ -33,14 +43,24 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         return vh;
     }
 
+
+    public void setOnDiaryAdapterListener(OnDiaryAdapterListener listener){
+        this.mListener = listener;
+    }
+
+
+    public DiaryAdapter(List<DiaryModel> diaryModelList){
+        this.diaryModelList = diaryModelList;
+    }
     @Override
     public void onBindViewHolder(@NonNull DiaryAdapter.ViewHolder holder, final int position) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
-        String time = dateFormat.format(diaryModelList.get(position).timestamp);
+//        String time = dateFormat.format(diaryModelList.get(position).timestamp);
 
         holder.titleTextView.setText(diaryModelList.get(position).title);
         holder.contentTextView.setText(diaryModelList.get(position).content);
-        holder.timeTextView.setText(time);
+        holder.nameTextView.setText(diaryModelList.get(position).username);
+//        holder.timeTextView.setText(time);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,36 +72,9 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         });
     }
 
-    public void setOnDiaryAdapterListener(OnDiaryAdapterListener listener){
-        this.mListener = listener;
-    }
-
-    public DiaryAdapter(){
-        this.diaryModelList = new LinkedList<>();
-    }
-
-    public DiaryAdapter(List<DiaryModel> diaryModelList){
-        this.diaryModelList = diaryModelList;
-    }
-
-    public void addContent(DiaryModel model){
-        diaryModelList.add(model);
-    }
-
     @Override
     public int getItemCount() {
         return diaryModelList.size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleTextView, contentTextView, timeTextView, nameTextView;
-        public ImageView profileView;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            timeTextView = itemView.findViewById(R.id.diarylist_timestamp);
-            contentTextView = itemView.findViewById(R.id.diarylist_content);
-            titleTextView = itemView.findViewById(R.id.diarylist_title);
-        }
     }
 
     public interface OnDiaryAdapterListener {

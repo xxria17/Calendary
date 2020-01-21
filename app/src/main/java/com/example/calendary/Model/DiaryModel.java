@@ -12,7 +12,6 @@ public class DiaryModel {
     public ImageView imageView;
     public String id;
     public String user_id;
-    public String user_name;
     public Date timestamp;
 
     public DiaryModel(){}

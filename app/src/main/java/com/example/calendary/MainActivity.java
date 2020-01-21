@@ -20,7 +20,7 @@ import com.example.calendary.calendar.CalendarFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     androidx.appcompat.widget.Toolbar maintoolbar;
     BottomNavigationView bottomNavigationView;
@@ -108,5 +108,15 @@ public class MainActivity extends AppCompatActivity {
         todayDiary = (TextView) findViewById(R.id.todayDiary);
 
         searchView = (SearchView) findViewById(R.id.searchView);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == hotDiary){
+            todayDiary.setAlpha(0.3f);
+        }
+        else if(v == todayDiary){
+            hotDiary.setAlpha(0.3f);
+        }
     }
 }

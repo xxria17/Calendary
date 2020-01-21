@@ -1,4 +1,4 @@
-package com.example.calendary.Model;
+package com.example.calendary.diary;
 
 import android.widget.ImageView;
 

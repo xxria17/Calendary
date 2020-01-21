@@ -10,7 +10,6 @@ import com.example.calendary.Fragment.MyDiaryFragment;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private int tabCount;
 
     public TabPagerAdapter(@NonNull FragmentManager fm, int tabCount) {
         super(fm, tabCount);
@@ -35,6 +34,6 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return tabCount;
+        return 2;
     }
 }

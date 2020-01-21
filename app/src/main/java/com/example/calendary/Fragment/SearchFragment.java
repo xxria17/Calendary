@@ -8,19 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.calendary.Model.TrendModel;
 import com.example.calendary.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SearchFragment extends Fragment {
+import java.util.ArrayList;
 
+
+public class SearchFragment extends Fragment {
+    private ListView trendList;
 
     public SearchFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,5 +28,10 @@ public class SearchFragment extends Fragment {
 
         return view;
     }
+
+    private void init(View view){
+        trendList = (ListView) view.findViewById(R.id.trend_list);
+    }
+
 
 }

@@ -10,13 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calendary.Model.DiaryModel;
 import com.example.calendary.R;
 
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
     private List<DiaryModel> diaryModelList;
@@ -55,12 +52,12 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull DiaryAdapter.ViewHolder holder, final int position) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
-//        String time = dateFormat.format(diaryModelList.get(position).timestamp);
+        String time = dateFormat.format(diaryModelList.get(position).timestamp);
 
         holder.titleTextView.setText(diaryModelList.get(position).title);
         holder.contentTextView.setText(diaryModelList.get(position).content);
         holder.nameTextView.setText(diaryModelList.get(position).username);
-//        holder.timeTextView.setText(time);
+        holder.timeTextView.setText(time);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,8 @@ package com.example.calendary.diary;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,16 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.calendary.Model.DiaryModel;
 import com.example.calendary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.value.TimestampValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +48,7 @@ public class DiaryFragment extends Fragment {
     private Map<String, Object> diaryMap;
     BaseDiary baseDiary;
     DiaryAdapter diaryAdapter;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     public DiaryFragment() {
     }
@@ -57,14 +60,7 @@ public class DiaryFragment extends Fragment {
 
         init(view);
 
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("로딩중입니다..");
-        progressDialog.show();
-
-
         BestDiary_load();
-        progressDialog.dismiss();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -82,6 +78,9 @@ public class DiaryFragment extends Fragment {
     private void init(View v){
         diary_list = (RecyclerView) v.findViewById(R.id.shareDiary_list);
         refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout1);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         layoutManager = new LinearLayoutManager(getActivity());
         diary_list.setLayoutManager(layoutManager);
@@ -92,6 +91,8 @@ public class DiaryFragment extends Fragment {
     }
 
     private void BestDiary_load(){
+        progressDialog.show();
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -112,6 +113,7 @@ public class DiaryFragment extends Fragment {
                         diaryModel.title = (String) diaryMap.getOrDefault("title", "제목");
                         diaryModel.content = (String) diaryMap.getOrDefault("content", "내용");
                         diaryModel.username = (String) diaryMap.getOrDefault("user name", "이름");
+                        diaryModel.timestamp = ((Timestamp) diaryMap.getOrDefault("timestamp", 0)).toDate();
 //                    diaryModel.imageView = (ImageView) diaryMap.getOrDefault("title", "제목");
 
                         diaryModelList.add(diaryModel);
@@ -124,6 +126,29 @@ public class DiaryFragment extends Fragment {
             }
         });
 
+    }
+
+    public void loading(){
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog = new ProgressDialog(getContext());
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("로딩중입니다..");
+                        progressDialog.show();
+                    }
+                } , 0);
+    }
+
+    public void loadingEnd(){
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                } , 0);
     }
 
 }

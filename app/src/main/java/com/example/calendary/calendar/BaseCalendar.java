@@ -93,21 +93,6 @@ public class BaseCalendar {
 
         currCal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.getActualMinimum(Calendar.DAY_OF_MONTH));
         String firstDate = year + month + day ;
-        Log.d("!!!!!!!!!!!!!" , firstDate);
-
-//        if("" != null) {
-//            currCal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-//
-//            String tmpYear = String.valueOf(cal.get(Calendar.YEAR));
-//            String tmpMonth = String.valueOf(cal.get(Calendar.MONTH)) + 1;
-//            String tmpday = "01";
-//
-//            if (tmpMonth.length() == 1) {
-//                tmpMonth = "0" + tmpMonth;
-//            }
-//
-//            firstDate = String.format("%s%s%s", tmpYear, tmpMonth, tmpday);
-//        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date first = dateFormat.parse(firstDate);

@@ -2,9 +2,10 @@ package com.example.calendary.diary;
 
 import android.widget.ImageView;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DiaryModel {
+public class DiaryModel implements Serializable {
 
     public String username;
     public String title;

@@ -1,6 +1,9 @@
 package com.example.calendary.Fragment;
 
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.calendary.diary.BaseDiary;
 import com.example.calendary.diary.DiaryModel;
 import com.example.calendary.R;
 import com.example.calendary.diary.DiaryAdapter;
@@ -50,6 +54,8 @@ public class MyDiaryFragment extends Fragment {
     private RecyclerView mydiary_list;
     List<DiaryModel> diaryModelList;
     private Map<String, Object> diaryMap;
+    private ProgressDialog progressDialog;
+    private BaseDiary baseDiary;
 
     public MyDiaryFragment() {
 
@@ -60,45 +66,18 @@ public class MyDiaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_my_diary, container, false);
         init(view);
-        load_myDiary();
-        return view;
-    }
+        baseDiary.load_myDiary(view.getContext(), mydiary_list);
 
-    public void load_myDiary(){
-        CollectionReference reference = firebaseFirestore.collection("Content");
-        reference.whereEqualTo("user id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    QuerySnapshot documentSnapshots = task.getResult();
-                    diaryModelList = new ArrayList<>();
-                    diaryMap = new HashMap<>();
-                    for(QueryDocumentSnapshot document : documentSnapshots) {
-                        DiaryModel diaryModel = new DiaryModel();
-
-                        diaryModel.id = (String) document.getId();
-                        diaryModel.title = (String) diaryMap.getOrDefault("title", "제목");
-                        diaryModel.content = (String) diaryMap.getOrDefault("content", "내용");
-                        diaryModel.username = (String) diaryMap.getOrDefault("user name", "이름");
-//                        diaryModel.timestamp = ((Timestamp)diaryMap.getOrDefault("timestamp", 0)).toDate();
-//                    diaryModel.imageView = (ImageView) diaryMap.getOrDefault("title", "제목");
-
-                        diaryModelList.add(diaryModel);
-
-                        Collections.sort(diaryModelList, new Comparator<DiaryModel>() {
-                            @Override
-                            public int compare(DiaryModel o1, DiaryModel o2) {
-                                return o2.timestamp.compareTo(o1.timestamp);
-                            }
-                        });
-                    }
-                    diaryAdapter = new DiaryAdapter(diaryModelList);
-                    mydiary_list.setAdapter(diaryAdapter);
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
+            public void onRefresh() {
+                baseDiary.load_myDiary(view.getContext(), mydiary_list);
+                refreshLayout.setRefreshing(false);
             }
         });
+
+
+        return view;
     }
 
     private void init(View v){
@@ -107,9 +86,16 @@ public class MyDiaryFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         mydiary_list.setLayoutManager(layoutManager);
 
+        refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout2);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
+
+        baseDiary = new BaseDiary();
     }
 
 }

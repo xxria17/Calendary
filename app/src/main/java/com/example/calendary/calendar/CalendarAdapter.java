@@ -55,13 +55,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CalendarAdapter.ViewHolder holder, final int position) {
 
-        // 일요일 날짜 텍스트 컬러
-//        if ( {
-//            holder.day.setTextColor(Color.parseColor(""));
-//        } else {
-//
-//        }
-
 //        // 공휴일 텍스트 컬러
 //        ArrayList<Holidays> arrayList = HolidayCalendar.holidaysArrayList("2020");
 //        arrayList.get(position).getDate();

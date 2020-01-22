@@ -1,4 +1,4 @@
-package com.example.calendary;
+package com.example.calendary.Activitiy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.calendary.R;
 import com.example.calendary.diary.DiaryFragment;
 import com.example.calendary.Fragment.MyPageFragment;
 import com.example.calendary.Fragment.SearchFragment;

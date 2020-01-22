@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.calendary.Adapter.TabPagerAdapter;
-import com.example.calendary.LoginActivity;
+import com.example.calendary.Activitiy.LoginActivity;
 import com.example.calendary.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;

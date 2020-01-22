@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +23,22 @@ import com.example.calendary.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class MyPageFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private TextView logout;
+    private TextView logout, username;
     private ImageView alarm, setting;
     TabPagerAdapter pagerAdapter;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
 
     public MyPageFragment() {
     }
@@ -42,8 +48,24 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         init(view);
         setViewPager();
+
+        user = firebaseAuth.getCurrentUser();
+        CollectionReference reference = firebaseFirestore.collection("Users");
+        reference.whereEqualTo("email", user.getEmail()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                QuerySnapshot snapshots = task.getResult();
+                for(QueryDocumentSnapshot queryDocumentSnapshot : snapshots){
+                    username.setText(queryDocumentSnapshot.getData().get("name").toString());
+                }
+            } else{
+                Log.d("MyPageFragment!!" , "get failed with ", task.getException());
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +84,8 @@ public class MyPageFragment extends Fragment {
         logout = (TextView) view.findViewById(R.id.logout);
         alarm = (ImageView) view.findViewById(R.id.notification);
         setting = (ImageView) view.findViewById(R.id.settingButton);
+        username = (TextView) view.findViewById(R.id.username);
 
-        firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
             getActivity().finish();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -117,4 +139,5 @@ public class MyPageFragment extends Fragment {
         });
         alert.show();
     }
+
 }

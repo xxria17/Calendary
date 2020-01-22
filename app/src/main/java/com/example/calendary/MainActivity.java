@@ -20,12 +20,12 @@ import com.example.calendary.calendar.CalendarFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity{
 
     androidx.appcompat.widget.Toolbar maintoolbar;
     BottomNavigationView bottomNavigationView;
     FrameLayout main_framelayout;
-    TextView toolbar_text, hotDiary, todayDiary;
+    public static TextView toolbar_text, hotDiary, todayDiary;
     SearchView searchView;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
+        hotDiary = (TextView) findViewById(R.id.hotDiary);
+        todayDiary = (TextView) findViewById(R.id.todayDiary);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.main_framelayout, calendarFragment).commitAllowingStateLoss();
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         transaction.replace(R.id.main_framelayout, diaryFragment).commit();
                         searchView.setVisibility(View.GONE);
                         hotDiary.setVisibility(View.VISIBLE);
-                        todayDiary.setAlpha(0.3f);
+
                         todayDiary.setVisibility(View.VISIBLE);
                         toolbar_text.setText("");
                         maintoolbar.setBackgroundResource(R.color.white);
@@ -104,19 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_framelayout = (FrameLayout) findViewById(R.id.main_framelayout);
 
         toolbar_text = (TextView) findViewById(R.id.toolbar_text);
-        hotDiary = (TextView) findViewById(R.id.hotDiary);
-        todayDiary = (TextView) findViewById(R.id.todayDiary);
-
         searchView = (SearchView) findViewById(R.id.searchView);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == hotDiary){
-            todayDiary.setAlpha(0.3f);
-        }
-        else if(v == todayDiary){
-            hotDiary.setAlpha(0.3f);
-        }
-    }
 }

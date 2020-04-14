@@ -113,7 +113,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     public void refreshView(Calendar calendar) {
         notifyDataSetChanged();
-        calendarFragment.refreshCurrentMonth(calendar);
     }
 
     public interface OnCalendarAdapterListener {

@@ -14,6 +14,7 @@ public class DiaryModel implements Serializable {
     public String id;
     public String user_id;
     public Date timestamp;
+    public Date select_timestamp;
 
     public DiaryModel(){}
 

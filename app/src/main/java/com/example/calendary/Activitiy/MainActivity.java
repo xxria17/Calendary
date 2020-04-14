@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.calendary.Fragment.MyPageFragment;
 import com.example.calendary.Fragment.SearchFragment;
 import com.example.calendary.calendar.CalendarFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity{
     FrameLayout main_framelayout;
     public static TextView toolbar_text, hotDiary, todayDiary;
     SearchView searchView;
+    private FloatingActionButton floatingBtn;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private CalendarFragment calendarFragment = new CalendarFragment();
@@ -50,6 +53,15 @@ public class MainActivity extends AppCompatActivity{
         searchView.setVisibility(View.GONE);
         hotDiary.setVisibility(View.GONE);
         todayDiary.setVisibility(View.GONE);
+        floatingBtn.show();
+
+        floatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WriteDiaryActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.main_bottomNavigation);
@@ -66,6 +78,7 @@ public class MainActivity extends AppCompatActivity{
                         hotDiary.setVisibility(View.GONE);
                         todayDiary.setVisibility(View.GONE);
                         maintoolbar.setBackgroundResource(R.color.white);
+                        floatingBtn.show();
                         break;
                     }
                     case R.id.diary:{
@@ -75,16 +88,17 @@ public class MainActivity extends AppCompatActivity{
                         hotDiary.setVisibility(View.GONE);
                         todayDiary.setVisibility(View.GONE);
                         maintoolbar.setBackgroundResource(R.color.white);
+                        floatingBtn.hide();
                         break;
                     }
                     case R.id.mood:{
                         transaction.replace(R.id.main_framelayout, diaryFragment).commit();
                         searchView.setVisibility(View.GONE);
                         hotDiary.setVisibility(View.VISIBLE);
-
                         todayDiary.setVisibility(View.VISIBLE);
                         toolbar_text.setText("");
                         maintoolbar.setBackgroundResource(R.color.white);
+                        floatingBtn.hide();
                         break;
                     }
                     case R.id.setting:{
@@ -94,6 +108,7 @@ public class MainActivity extends AppCompatActivity{
                         searchView.setVisibility(View.GONE);
                         hotDiary.setVisibility(View.GONE);
                         todayDiary.setVisibility(View.GONE);
+                        floatingBtn.hide();
                         break;
                     }
                 }
@@ -109,6 +124,7 @@ public class MainActivity extends AppCompatActivity{
 
         toolbar_text = (TextView) findViewById(R.id.toolbar_text);
         searchView = (SearchView) findViewById(R.id.searchView);
+        floatingBtn = (FloatingActionButton) findViewById(R.id.floatingActionButton);
     }
 
 }

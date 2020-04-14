@@ -107,6 +107,15 @@
                 android:text="@string/login"
                 android:textColor="@color/white" />
 
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_btn"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"/>
+
 
             <TextView
                 android:id="@+id/signUp"

@@ -1,9 +1,23 @@
 <resources>
+    <array name="material_calendar_months_array">
+        <item>1\n</item>
+        <item>2\n</item>
+        <item>3\n</item>
+        <item>4\n</item>
+        <item>5\n</item>
+        <item>6\n</item>
+        <item>7\n</item>
+        <item>8\n</item>
+        <item>9\n</item>
+        <item>10\n</item>
+        <item>11\n</item>
+        <item>12\n</item>
+    </array>
+
     <string name="app_name">Calendary</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="default_number">1</string>
 
+    <string name="default_number">1</string>
     <string name="Mon">월</string>
     <string name="Tue">화</string>
     <string name="Wed">수</string>
@@ -13,11 +27,18 @@
     <string name="Sun">일</string>
 
     <string name="Home">달력</string>
+    <string name="login">로그인</string>
+    <string name="name">이름</string>
+    <string name="email">이메일</string>
+    <string name="pw">비밀번호</string>
+    <string name="join">회원가입</string>
 
-    <string name="login">LOGIN</string>
-    <string name="name">NAME</string>
-    <string name="email">EMAIL</string>
-    <string name="pw">PW</string>
-    <string name="join">JOIN</string>
     <string name="pwcheck">비밀번호 확인</string>
+
+    <!--Write Activity-->
+    <string name="write_content">내용을 입력해주세요</string>
+    <string name="write_title">제목</string>
+    <string name="save_btn">저장</string>
+    <string name="back_btn">뒤로가기</string>
+    <string name="add_img_btn">이미지 추가하기</string>
 </resources>

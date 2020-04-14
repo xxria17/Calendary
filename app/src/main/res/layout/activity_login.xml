@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:fontFamily="@font/notossans_bold"
+                android:fontFamily="@font/nanumsquareregular"
                 android:text="@string/email"
                 android:textColor="@color/colorPrimary" />
 
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:fontFamily="@font/notossans_bold"
+                android:fontFamily="@font/nanumsquareregular"
                 android:text="@string/pw"
                 android:textColor="@color/colorPrimary" />
 
@@ -103,7 +103,8 @@
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
                 android:background="@color/colorPrimary"
-                android:fontFamily="@font/notossans_bold"
+                android:fontFamily="@font/nanumsquareregular"
+                android:textStyle="bold"
                 android:text="@string/login"
                 android:textColor="@color/white" />
 
@@ -123,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="45dp"
-                android:fontFamily="@font/notossans_bold"
+                android:fontFamily="@font/nanumsquareregular"
                 android:gravity="right"
                 android:text="회원가입하기"
                 android:textColor="#F54F30"
@@ -134,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="45dp"
-                android:fontFamily="@font/notossans_bold"
+                android:fontFamily="@font/nanumsquareregular"
                 android:gravity="right"
                 android:text="비밀번호 찾기"
                 android:textColor="#777777"

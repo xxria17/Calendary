@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activitiy.DetailActivity"></activity>
+        <activity android:name=".Activitiy.WriteDiaryActivity"></activity>
+        <activity android:name=".Activitiy.DetailActivity" />
         <activity android:name=".Activitiy.JoinActivity" />
         <activity android:name=".Activitiy.LoginActivity">
             <intent-filter>
